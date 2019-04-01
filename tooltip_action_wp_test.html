@@ -1,0 +1,155 @@
+<html>
+	<head>
+		<title>Test</title>
+		<style type="text/css">
+			* {
+				font-family: "Calibri", "Arial", "Helvetica", sans-serif;
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+				text-decoration: none;
+				list-style: none;
+				clear: none;
+			}
+			body {
+				width: 800px;
+				margin: 10% auto;
+			}
+			table {
+				border-spacing: 0;
+				border-collapse: collapse;
+				font-size: 15px;
+				line-height: 18px;
+				color: #444;
+			}
+			td {
+				height: 72px;
+				width: 72px;
+				border: 1px solid #e2e2e2;
+			}
+			td:hover {
+				background-color: #f8f8f8;
+			}
+			.doverstaffed {
+				color: red;
+				position: relative;
+				text-decoration: underline;
+			}
+			input.dweekValue {
+				border: none;
+				color: inherit;
+				width: 72px;
+				height: 72px;
+				padding:7px;
+				text-align: center;
+				background-color: transparent;
+				font-size: inherit;
+				text-decoration: inherit;
+			}
+			input.dweekValue:focus {
+				outline: 3px solid #faa634;
+			}
+			::-webkit-inner-spin-button, 
+			::-webkit-outer-spin-button {
+    			-webkit-appearance: none;
+    			display: none;
+    			background: none;
+			}
+			.demployee, .drate {
+				padding: 7px;
+				font-size: inherit;
+			}
+			/*--- detailsPane ---*/
+			#ddetailsPane {
+				background-color: #f8f8f8;
+				border: 1px solid #e2e2e2;
+				padding: 14px;
+				position: absolute;
+				bottom: 0;
+				width: inherit;
+				font-size: 15px;
+				line-height: 18px;
+				color: #444;
+				display: none;
+			}
+			.dcloseIcon {
+				float: right;
+				font-size: 24px;
+				color: #999;
+				line-height: inherit;
+				padding: 3px 7px 5px;
+				border-radius: 14px;
+				text-align: center;
+				opacity: 0.7;
+			}
+			.dcloseIcon:hover {
+				background-color: #e2e2e2;
+				opacity: 1;
+			}
+			/*--- tooltip ---*/
+			.dtooltipContainer {
+				position: absolute;
+				padding: 7px 0;
+				background-color: transparent;
+				right: 0;
+				top: -35px;
+				display: none;
+			}
+			.dtooltipLabel {
+				display: inline-block;
+				padding: 7px 14px;
+				background-color: #444;
+				font-size: 13px;
+				line-height: 18px;
+				text-align: center;
+				color: #fff;
+				letter-spacing: 0.2px;
+				width: 110px;
+			}
+			.dtooltipLabel:hover {
+				background-color: #faa634;
+			}
+		</style>
+		<script type="text/javascript">
+			function display(x) {
+				document.getElementById(x).style.display = "block";
+			}
+			function hide(x) {
+				document.getElementById(x).style.display = "none";
+			}
+		</script>
+	</head>
+	<body>
+		<table>
+			<tr>
+				<td class="demployee">&lt;staff name&gt;</td>
+				<td class="drate">&lt;billing rate&gt;</td>
+				<td class="dweek1 doverstaffed" onmouseover="display('ddummy1')" onmouseout="hide('ddummy1')">
+					<input class="dweekValue" type="number" value="50">
+					<div class="dtooltipContainer" id="ddummy1" onmouseover="display('ddummy1')" onmouseout="hide('ddummy1')">
+						<span class="dtooltipLabel" onclick="display('ddetailsPane')" >See Details &nbsp;&#x25b6;</span>
+					</div>
+				</td>
+				<td class="dweek2"><input class="dweekValue" type="number" value="20"></td>
+				<td class="dweek3"><input class="dweekValue" type="number" value="14"></td>
+				<td class="dweek4"><input class="dweekValue" type="number" value="5"></td>
+				<td class="dweek5"><input class="dweekValue" type="number" value="30"></td>
+			</tr>
+		</table>
+		<!--
+		<div class="dmainBlock">
+			<span class="dhover" onmouseover="displayTooltip('dtooltipContainer')" onmouseout="hideTooltip('dtooltipContainer')">Label</span>
+			<div class="dtooltipContainer" onmouseover="displayTooltip('dtooltipContainer')" onmouseout="hideTooltip('dtooltipContainer')">
+				<div id="dtooltip">
+					<span class="dtooltipMessage">Read more &#8230;</span>
+					<div class="dtooltipButton" onclick="displayTooltip('ddetailsPane')">&#x25b6;</div>
+				</div>
+			</div>
+		</div>
+		-->
+		<div id="ddetailsPane">
+			<span class="dcloseIcon" onclick="hide('ddetailsPane')">&#x00d7;</span><br>
+			Sed posuere consectetur est at lobortis. Nullam quis risus eget urna mollis ornare vel eu leo. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam quis risus eget urna mollis ornare vel eu leo. Vestibulum id ligula porta felis euismod semper. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Vestibulum id ligula porta felis euismod semper. Aenean lacinia bibendum nulla sed consectetur. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Sed posuere consectetur est at lobortis. Nullam id dolor id nibh ultricies vehicula ut id elit. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Aenean lacinia bibendum nulla sed consectetur. Cras justo odio, dapibus ac facilisis in, egestas eget quam.
+		</div><!--end of ddetailsPane -->
+	</body>
+</html>
