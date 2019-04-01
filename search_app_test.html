@@ -1,0 +1,1358 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Search101</title>
+	<meta content="text/html" lang="en" charset="utf-8">
+	<!-- script file is at the bottom of the file -->
+	<style>
+		/* ---- dsearch-main.css ----*/
+		* {
+			/* css reset */
+			margin: 0;
+			padding: 0;
+			text-decoration: none;
+			box-sizing: border-box;
+			list-style: none;
+			outline: none;
+			-webkit-appearance: none;
+			font-family: KievitOT;
+		}
+		/*--
+		general definitions
+		--*/
+		body {
+			width: 100%;
+			height: 100%;
+			background-color: white;
+		}
+		button {
+			box-shadow: none;
+			border: none;
+			background: none;
+			background-repeat: no-repeat;
+		}
+		/*--
+		header css
+		--*/
+		.dheaderContainer {
+			border-bottom: 1px solid #e2e2e2;
+			display: flex;
+			flex-wrap: nowrap;
+			flex-direction: column;
+		}
+		.dintranetNavigation {
+			width: 100%;
+			background-color: #222;
+			display: flex;
+			justify-content: center;
+		}
+		.dintranetNavigation ul {
+			margin: auto;
+		}
+		.dintranetNavigation li {
+			display: inline-block;
+			padding: 0 14px;
+		}
+		.dintranetNavigation li a {
+			font: bold 12px/20px KievitOT;
+			color: #fff;
+			text-transform: uppercase;
+			letter-spacing: 0.5px;
+			opacity: 0.8;
+		}
+		.dintranetNavigation li a:hover {
+			opacity: 1;
+		}
+		.dintranetNavigation li:hover {
+			background-color: rgba(255,255,255,0.4);
+		}
+		.dlogoSearchLogin {
+			padding: 21px 28px 0;
+			display: flex;
+			flex-direction: row;
+			flex-wrap: wrap;
+			justify-content: flex-start;
+			align-items: center;
+		}
+		.dbrandLogo {
+			width: 80px;
+			height: 36px;
+			background-color: #eee;
+		}
+		.dappName {
+			margin-left: 21px;
+			font: 20px/36px KievitOT;
+			font-weight: 300;
+		}
+		.dsearchInputMain {
+			margin-left: 21px;
+		}
+		.dsearchInputMain input[type="text"] {
+			border: 1px solid #d2d2d2;
+			background-color: #fff;
+			padding: 8px 70px 8px 14px;
+			min-width: 240px;
+			font: 13px/18px KievitOT;
+			color: #222;
+			letter-spacing: 0.5px;
+			border-radius: 2px;
+		}
+		.dsearchInputMain input[type="text"]:focus {
+			border-color: #faa634;
+		}
+		.dsearchInputMain form {
+			position: relative;
+		}
+		.dsearchInputMain button {
+			position: absolute;
+			right: 1px;
+			top: 1px;
+			margin-left: -36px;
+			height: 34px;
+			width: 34px;
+			background: #eee url(icons/search.svg) no-repeat center;
+			border-left: 1px solid #d2d2d2;
+			opacity: 0.4;
+		}
+		.dsearchInputMain button:hover {
+			opacity: 1;
+		}
+		.dloginInfo {
+			text-transform: uppercase;
+			font: 10px/36px KievitOT;
+			color: #666;
+			position: absolute;
+			right: 28px;
+			letter-spacing: 0.3px;
+		}
+		.dloginInfo .dusername, .dloginInfo .dpreferences {
+			font-weight: bold;
+		}
+		.dloginInfo .dusername::before {
+			content: "Logged in as: ";
+			font-weight: normal;
+		}
+		.dloginInfo .dusername::after {
+			content: " | ";
+			font-weight: normal;
+		}
+		.dscopes {
+			padding: 0px 28px 14px;
+		}
+		.dscopes .dlabel {
+			font: inherit;
+			color: inherit;
+		}
+		/*-- 
+		apply padding and hover on the button
+		to increase clickable area
+		--*/
+		.dscopes button{
+			margin-right: 2%; /*-- using fluid value for tablet responsiveness --*/
+			font: 12px/16px KievitOT;
+			color: #666;
+			text-transform: uppercase;
+			letter-spacing: 0.5px;
+			padding: 21px 0px 4px;
+		}
+		.dscopes button:last-child {
+			margin-right: 0;
+		}
+		.dscopes button:hover {
+			color: #222;
+			transition: color 0.2s;
+			cursor: pointer;
+		}
+		.dscopes button.dselected {
+			font-weight: bold;
+			color: #222;
+			border-bottom: 2px solid #222;
+		}
+		/*--
+		scope contents below
+		--*/
+		.dscopeContent {
+			position: relative;
+			display: block;
+			width: 100%;
+			height: 100%;
+		}
+		.dscopeAll,
+		.dscopePeople,
+		.dscopeProjects,
+		.dscopeClients,
+		.dscopePartners,
+		.dscopeCountries,
+		.dscopeImages,
+		.dscopeDocuments,
+		.dscopePages,
+		.dscopeReports {
+			/*-- display: flex; using class=dshow to set display=flex --*/
+			flex-direction: row;
+			flex-wrap: nowrap;
+			align-items: stretch;
+			justify-content: flex-start;
+			display: none;
+		}
+		.dsidebar {
+			height: 100%;
+			flex: 0 0 240px;
+			background-color: #f8f8f8;
+			border-right: 1px solid #e2e2e2;
+			font: 12px/16px KievitOT;
+			box-sizing: border-box;
+			padding-bottom: 28px;
+		}
+		.dsidebar .dscrollContainer {
+			height: 100%;
+			overflow-y:scroll;
+			padding-bottom: 70%;
+		}
+		.dscopeProjects form label {
+			display: block;
+			padding: 4px 0;
+		}
+		input[type="checkbox"] {
+			width: 16px;
+			height: 16px;
+			border: 1px solid #d2d2d2;
+			background-color: white;
+			margin-right: 7px;
+		}
+		input[type="checkbox"]:checked {
+			border-color: #faa634;
+			background: #faa634 url(icons/select-white.svg) no-repeat center;
+			background-size: 14px;
+		}
+		.dscopeProjects .dsidebar form {
+			padding: 40px 28px 14px;
+			border-bottom: 1px solid #e2e2e2;
+		}
+		.dscopeProjects .dsidebar button {
+			padding: 7px 28px;
+			width: 100%;
+			display: block;
+			font: inherit;
+			color: inherit;
+			border-bottom: 1px solid #e2e2e2;
+			text-align: left;
+		}
+		.dscopeProjects .dsidebar button:hover {
+			background-color: #eee;
+		}
+		.dscopeProjects .dsidebar label {
+			display: inline-block;
+		}
+		.dscopeProjects .dsidebar button .darrowDown {
+			display: inline-block;
+			float: right;
+			width: 16px;
+			height: 16px;
+			background: transparent url(icons/arrow-down.svg) no-repeat center;
+			background-size: 50%;
+			opacity: 0.4;
+		}
+		/*-- control bar --*/
+		.dresultsMain {
+			width: 100%;
+		}
+		.dcontrolBar {
+			border-bottom: 1px solid #e2e2e2;
+			padding-left: 21px;
+			display: flex;
+			flex-direction: row;
+			flex-wrap: nowrap;
+			align-items: flex-start;
+			justify-content: flex-start;
+			background-color: #f8f8f8;
+		}
+		.dcontrolBar .dcontrolBarChild {
+			border-right: 1px solid #e2e2e2;
+			height: 40px;
+		}
+		.dcontrolBar .dresultsCount {
+			display: block;
+			font: 13px/18px KievitOT;
+			color: #666;
+			padding: 11px 14px 11px 0;
+		}
+		.dcontrolBar .dresultsCount::after {
+			content: " Results";
+			font: 13px/18px KievitOT;
+		}
+		.dcontrolBar .dcardView,
+		.dcontrolBar .dlistView,
+		.dcontrolBar .dreverseSort,
+		.dcontrolBar .dexportIcon,
+		.dcontrolBar .dsort .darrowDown {
+			height: 40px;
+			width: 40px;
+			opacity: 0.4;
+		}
+		.dcontrolBar .dcardView {
+			background: transparent url(icons/view-grid.svg) no-repeat center;
+		}
+		.dcontrolBar .dlistView {
+			background: transparent url(icons/view-list.svg) no-repeat center; 
+		}
+		.dcontrolBar .dexportIcon {
+			background: transparent url(icons/export.svg) no-repeat center;
+		}
+		.dcontrolBar .dcardView:hover,
+		.dcontrolBar .dlistView:hover,
+		.dcontrolBar .dreverseSort:hover,
+		.dcontrolBar .dexportIcon:hover,
+		.dcontrolBar .dsort .darrowDown:hover,
+		.dcontrolBar .dexport:hover {
+			background-color: #eee;
+			opacity: 1;
+			color: #222;
+			cursor: default;
+		}
+		.dcontrolBar .dexport {
+			display: flex;
+			flex-direction: row;
+			flex-wrap: nowrap;
+			padding-left: 14px;
+		}
+		.dcontrolBar .dexport .dlabel {
+			font: 13px/18px KievitOT;
+			color: #666;
+			padding: 11px 0;
+		}
+		.dcontrolBar .dsort {
+			padding-left: 14px;
+			font: 13px/18px KievitOT;
+			color: #666;
+			display: flex;
+			flex-direction: row;
+			flex-wrap: nowrap;
+			align-items: center;
+			justify-content: center;
+			margin: 0;
+		}
+		.dcontrolBar .dsort:hover {
+			background-color: #eee;
+			margin: 0;
+		}
+		.dcontrolBar .dsort select {
+			border: none;
+			background: none;
+			font: 13px/18px KievitOT;
+			color: #666;
+		}
+		.dcontrolBar .dsort .darrowDown {
+			background: transparent url(icons/arrow-down.svg) no-repeat center;
+		}
+		.dcontrolBar .dreverseSort {
+			background: transparent url(icons/sort.svg) no-repeat center;
+		}
+
+		/*-- results --*/
+		.dresultsContainerCards {
+			display: none;/*-- set to flex onclick --*/
+			flex-direction: row;
+			flex-wrap: wrap;
+			align-items: flex-start;
+			justify-content: flex-start;
+			padding: 14px;
+		}
+		.dresultsContainerCards .dcard {
+			width: 154px;
+			background-color: white;
+			padding: 7px;
+			box-shadow: 0px 1px 3px rgba(34,34,34,0.25);
+			box-sizing: border-box;
+			overflow: hidden;
+			margin: 7px;
+		}
+		.dresultsContainerCards .dcard:hover {
+			box-shadow: 0px 3px 8px rgba(34,34,34,0.4);
+			transition: box-shadow 0.3s;
+		}
+		.dcard * {
+			margin: 0;
+		}
+		.dscopeProjects .dthumbnail {
+			background: #f8f8f8 url(icons/project-thumbnail.svg) no-repeat center;
+			background-size: 35%;
+		}
+		.dscopeProjects .dcard .dthumbnail {
+			width: 140px;
+			height: 140px;
+			position: relative;
+		}
+		.dcard .dthumbnail:hover,
+		.dlist .dthumbnail:hover {
+			cursor: zoom-in;
+		}
+		.dscopeProjects .dcard .dprojectName {
+			font: 15px/20px KievitOT;
+			color: #faa634;
+			margin: 7px 0px 4px;
+			width: 100%;
+			height: 40px;
+			overflow-y: hidden;
+			display: block;
+			text-transform: capitalize;
+		}
+		.dscopeProjects .dcard .dprojectName:hover {
+			cursor: pointer;
+		}
+		.dscopeProjects .dcard .dprojectNumber {
+			font: 12px/16px KievitOT;
+			color: #222;
+			display: block;
+		}
+		.dscopeProjects .dcard .dprojectLocation {
+			font: 12px/16px KievitOT;
+			color: #666;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+			width: 140px;
+			overflow: hidden;
+		}
+		.dscopeProjects .dcard .dprojectCity::after {
+			content: ", ";
+			font: 12px/16px KievitOT;
+			color: #666;
+		}
+		/*-- dresultsContainerList --*/
+		.dscopeProjects .dresultsContainerList {
+			display: none; /*-- setting to flex onclick --*/
+			flex-direction: column;
+			flex-wrap: nowrap;
+			justify-content: flex-start;
+			padding: 21px;
+		}
+		.dscopeProjects .dresultsContainerList .dlist {
+			display: flex;
+			flex-direction: row;
+			flex-wrap: nowrap;
+			justify-content: flex-start;
+			align-items: flex-start;
+			margin-bottom: 21px;
+		}
+		.dscopeProjects .dresultsContainerList .dlist .dleft {
+			order: 0;
+			position: relative;
+		}
+		.dscopeProjects .dresultsContainerList .dlist .dright {
+			order: 1;
+			margin-left: 10px;
+		}
+		.dscopeProjects .dresultsContainerList .dthumbnail {
+			height: 84px;
+			width: 84px;
+			border: 1px solid #e2e2e2;
+		}
+		.dscopeProjects .dresultsContainerList .dimageCount,
+		.dscopeProjects .dcard .dthumbnail .dimageCount {
+			position: absolute;
+			left: 4px;
+			bottom: 4px;
+			padding: 4px 4px 4px 24px;
+			font: 12px/1em KievitOT;
+			background: white url(icons/image.svg) no-repeat;
+			background-size: auto 12px;
+			background-position: 4px 4px;
+			opacity: 0.8;
+		}
+		.dscopeProjects .dresultsContainerList .dprojectName a {
+			font: 15px/20px KievitOT;
+			color: #faa634;
+		}
+		.dscopeProjects .dresultsContainerList .dprojectName a:hover {
+			color: #f68933;
+		}
+		.dscopeProjects .dresultsContainerList .dsub,
+		.dscopeProjects .dresultsContainerList .dclient,
+		.dscopeProjects .dresultsContainerList .dservices,
+		.dscopeProjects .dresultsContainerList .dpracticeArea {
+			font: 13px/18px KievitOT;
+			color: #222;
+			text-overflow: ellipsis;
+		}
+		.dscopeProjects .dresultsContainerList .dprojectNumber::after,
+		.dscopeProjects .dresultsContainerList .dprojectCountry::after {
+			content: " | ";
+			font: 13px/18px KievitOT;
+			color: #222;
+		}
+		.dscopeProjects .dresultsContainerList .dprojectCity::after,
+		.dscopeProjects .dresultsContainerList .dprojectState::after {
+			content: ", ";
+			font: 13px/18px KievitOT;
+			color: #222;
+		}
+		.dscopeProjects .dresultsContainerList .dservicesList,
+		.dscopeProjects .dresultsContainerList .dpaList {
+			color: #666;
+		}
+		.dscopeProjects .dresultsContainerList .dstartDate::after {
+			content: " - ";
+			font: 13px/18px KievitOT;
+			color: #222;
+		}
+
+		/*-- quickView --*/
+		.dquickViewContainer {
+			display: none;
+			width: 100%;
+			height: 100%;
+			background-color: rgba(34,34,34,0.5);
+			z-index: 1;
+			position: fixed;
+			top: 0;
+			left: 0;
+		}
+		.dquickViewContainer .dcloseIcon {
+			width: 70px;
+			height: 70px;
+			background: transparent url(icons/close-white.svg) no-repeat center;
+			background-size: 30%;
+			opacity: 0.8;
+			position: absolute;
+			right: 0;
+		}
+		.dquickViewContainer .dcloseIcon:hover {
+			opacity: 1;
+		}
+		.dquickView {
+			max-width: 720px;
+			max-height: 80vh;
+			min-width: 640px;
+			box-sizing: border-box;
+			background-color: #fff;
+			margin: 8% auto;
+			z-index: 5;
+			box-shadow: 0 3px 8px rgba(34,34,34,0.4);
+			font: 15px/20px KievitOT;
+			color: #222;
+			display: flex;
+			flex-direction: row;
+			flex-wrap: nowrap;
+			justify-content: flex-start;
+			overflow-y: scroll;
+			padding: 21px;
+		}
+		.dquickView .dleft {
+			flex: 1 1 60%;
+			order: 1;
+			margin-right: 3%;
+		}
+		.dquickView .dright {
+			order: 2;
+			flex: 1 1 40%;
+			max-width: 360px;
+			min-width: 320px;
+		}
+		.dquickView .dlargeThumbnail {
+			width: 100%;
+			height: auto;
+			min-height: 300px;
+			background: #f8f8f8 no-repeat center;
+			margin-bottom: 21px;
+		}
+		.dquickView .dlargeThumbnail:last-child {
+			margin-bottom: 10%;
+		}
+		.dscopeProjects .dquickView .dlargeThumbnail {
+			background-image: url(icons/project-thumbnail.svg);
+			background-size: 15%;
+		}
+		.dquickView .dheader {
+			margin: 14px 0 14px;
+			font: 24px/30px KievitOT;
+			font-weight: 700;
+			text-transform: capitalize;
+		}
+		.dquickView .dsub1 {
+			font: 15px/20px KievitOT;
+			color: #666;
+			margin-bottom: 14px;
+		}
+		.dquickView .dsub1 .dtopProject {
+			width: 30px;
+			height: 20px;
+			background: transparent url(icons/badge-top.svg) no-repeat left;
+			float: left;
+		}
+		.dquickView .dsub2 {
+			font: 18px/24px KievitOT;
+			margin-bottom: 14px;
+		}
+		.dquickView .dsub2 .dprojectCity::after,
+		.dquickView .dsub2 .dprojectState::after {
+			content: ", ";
+			font: 18px/24px KievitOT;
+			color: #222;
+		}
+		.dquickView .dprofileButton {
+			font: 15px/20px KievitOT;
+			color: #fff;
+			padding: 5px 14px;
+			background-color: #faa634;
+			border-radius: 2px;
+			margin-bottom: 14px;
+			width: 103px;
+		}
+		.dquickView .dprofileButton:hover {
+			background-color: #f68933;
+			cursor: pointer;
+		}
+		.dquickView .dsub3,
+		.dquickView .dsub4,
+		.dquickView .dsub5,
+		.dquickView .dsub6 {
+			border-top: 1px solid #e2e2e2;
+			padding: 14px 0;
+		}
+		.dquickView .dsub3 .dclient,
+		.dquickView .dsub3 .dstartDate,
+		.dquickView .dsub3 .dendDate,
+		.dquickView .dsub3 .dgsf,
+		.dquickView .dsub3 .dgsm,
+		.dquickView .dsub3 .dconstructionCost,
+		.dquickView .dsub3 .doffice,
+		.dquickView .dsub3 .dprimaryContact {
+			color: #666;
+			padding-bottom: 7px;
+			display: inline-block;
+		}
+		.dquickView .dsub3 .dprimaryContact {
+			padding-bottom: 0;
+		}
+		.dquickView .dsub4 .dtitle,
+		.dquickView .dsub5 .dtitle,
+		.dquickView .dsub6 .dtitle {
+			font-weight: 700;
+			padding-bottom: 7px;
+			display: inline-block;
+		}
+		.dquickView .dsub4 .dlist,
+		.dquickView .dsub5 .dlist,
+		.dquickView .dsub6 .dlist {
+			line-height: 21px;
+		}
+
+		/*-- feedback --*/
+		.dresultsMain .dfeedback {
+			position: fixed;
+			top: 50%;
+			right: 0;
+			padding: 0;
+			margin: 0;
+		}
+		.dresultsMain .dfeedback img {
+			box-shadow: 0 1px 3px rgba(34,34,34,0.25);
+		}
+		.dresultsMain .dfeedback:hover img {
+			box-shadow: 0 3px 8px rgba(34,34,34,0.4);
+		}
+
+		/*-- no-data message --*/
+		.dscopeProjects .dresultsMain .dnoData {
+			background-color: #f8f8f8;
+			margin: 44px;
+			position: absolute;
+			top: 182px;
+			left: 240px;
+			width: calc(100vw - 330px);
+			height: 160px;
+			display: none; /*-- or display:block --*/;
+			box-sizing: border-box;
+		}
+		.dscopeProjects .dresultsMain .dnoData .dmessage {
+			font: 18px/24px KievitOT;
+			color: #666666;
+			text-align: center;
+			display: block;
+			margin-top: 70px;
+		}
+		.dscopeProjects .dresultsMain .dnoData .dmessage>i {
+			font-weight: bold;
+		}
+		/*-- conditional run --*/
+		.dshow {
+			display: flex;
+		}
+
+		/*-- fixed elements --*/
+		.dheaderContainer {
+			position: fixed;
+			top: 0;
+			left: 0;
+			z-index: 1;
+			background-color: white;
+			width: 100%;
+		}
+		.dsidebar {
+			position: fixed;
+			top: 136px;
+			left: 0;
+			z-index: 1;
+			width: 240px;
+			box-sizing: border-box;
+		}
+		.dcontrolBar {
+			position: fixed;
+			top: 136px;
+			left: 240px;
+			z-index: 1;
+			width: 100%;
+		}
+		.dresultsContainerCards,
+		.dresultsContainerList {
+			margin-top:176px;
+			margin-left: 240px;
+		}
+	</style>
+</head>
+<body>
+	<div class="dheaderContainer">
+		<div class="dintranetNavigation">
+			<ul>
+				<li><a href="">Link</a></li>
+				<li><a href="">Link</a></li>
+				<li><a href="">Link</a></li>
+				<li><a href="">Link</a></li>
+				<li><a href="">Link</a></li>
+				<li><a href="">Link</a></li>
+				<li><a href="">Link</a></li>
+				<li><a href="">Link</a></li>
+				<li><a href="">Link</a></li>
+				<li><a href="">Link</a></li>
+				<li><a href="">Link</a></li>
+			</ul>
+		</div>
+		<div class="dlogoSearchLogin">
+			<div class="dbrandLogo"></div>
+			<span class="dappName">Search</span>
+			<div class="dsearchInputMain">
+				<form>
+					<input type="text" id="dkeywordInput" placeholder="Enter keyword">
+					<button type="button"></button>
+				</form>
+			</div>
+			<div class="dloginInfo">
+				<span class="dusername">Firstname Lastname</span><span class="dpreferences">Preferences</span>
+			</div>
+		</div>
+		<div class="dscopes">
+			<button><span class="dlabel">All</span></button>
+			<button><span class="dlabel">People</span></button>
+			<button class="dselected"><span class="dlabel">Projects</span></button>
+			<button><span class="dlabel">Clients</span></button>
+			<button><span class="dlabel">Partners</span></button>
+			<button><span class="dlabel">Countries</span></button>
+			<button><span class="dlabel">Images</span></button>
+			<button><span class="dlabel">Documents</span></button>
+			<button><span class="dlabel">Pages &amp; Posts</span></button>
+			<button><span class="dlabel">Reports</span></button>
+		</div>
+	</div>
+	<div class="dscopeContent">
+		<div class="dscopeAll">
+			<div class="dsidebar"></div>
+			<div class="dresultsMain"></div>
+		</div>
+		<div class="dscopePeople">
+			<div class="dsidebar"></div>
+			<div class="dresultsMain"></div>
+		</div>
+		<div class="dscopeProjects dshow">
+			<div class="dsidebar">
+				<div class="dscrollContainer">
+					<form>
+						<label for="dprojectsTop">
+							<input type="checkbox" name="dprojectsTop">Only top projects
+						</label>
+						<label for="dprojectsImages">
+							<input type="checkbox" name="dprojectsImages">Only projects with images
+						</label>
+						<label for="dprojectsAwards">
+							<input type="checkbox" name="dprojectsAwards">Only projects with awards
+						</label>
+					</form>
+					<button type="button">
+						<span class="dlabel">Office</span>
+						<div class="darrowDown"></div>
+					</button>
+					<button type="button">
+						<span class="dlabel">Project City</span>
+						<div class="darrowDown"></div>
+					</button>
+					<button type="button">
+						<span class="dlabel">Project State</span>
+						<div class="darrowDown"></div>
+					</button>
+					<button type="button">
+						<span class="dlabel">Project Country</span>
+						<div class="darrowDown"></div>
+					</button>
+					<button type="button">
+						<span class="dlabel">Client Industry</span>
+						<div class="darrowDown"></div>
+					</button>
+					<button type="button">
+						<span class="dlabel">Service Type</span>
+						<div class="darrowDown"></div>
+					</button>
+					<button type="button">
+						<span class="dlabel">Practice Area</span>
+						<div class="darrowDown"></div>
+					</button>
+					<button type="button">
+						<span class="dlabel">Project Type</span>
+						<div class="darrowDown"></div>
+					</button>
+					<button type="button">
+						<span class="dlabel">Delivery Approach</span>
+						<div class="darrowDown"></div>
+					</button>
+					<button type="button">
+						<span class="dlabel">Sustainable Design</span>
+						<div class="darrowDown"></div>
+					</button>
+					<button type="button">
+						<span class="dlabel">Construction Cost</span>
+						<div class="darrowDown"></div>
+					</button>
+					<button type="button">
+						<span class="dlabel">Gross Area</span>
+						<div class="darrowDown"></div>
+					</button>
+					<button type="button">
+						<span class="dlabel">Start Date</span>
+						<div class="darrowDown"></div>
+					</button>
+					<button type="button">
+						<span class="dlabel">End Date</span>
+						<div class="darrowDown"></div>
+					</button>
+					<button type="button">
+						<span class="dlabel">Tags</span>
+						<div class="darrowDown"></div>
+					</button>
+				</div>
+			</div><!-- end of dsidebar -->
+			<div class="dresultsMain">
+				<div class="dcontrolBar">
+					<div class="dcontrolBarChild"><span class="dresultsCount">00,000</span></div>
+					<div class="dcontrolBarChild"><button type="button" class="dcardView"></button></div>
+					<div class="dcontrolBarChild"><button type="button" class="dlistView"></button></div>
+					<div class="dcontrolBarChild"><button type="button" class="dexport">
+						<span class="dlabel">Export</span>
+						<div class="dexportIcon"></div>
+					</button></div>
+					<div class="dcontrolBarChild"><button type="button" class="dsort">
+						<span class="dlabel">Sort By:&nbsp;</span>
+						<select>
+							<option value="drelevance">Relevance</option>
+							<option value="dprojectName">Project Name</option>
+							<option value="dendDate">End Date</option>
+						</select>
+						<div class="darrowDown"></div>
+					</button></div>
+					<div class="dcontrolBarChild"><button type="button" class="dreverseSort"></button></div>
+				</div><!-- end of dcontrolBar -->
+				<div class="dresultsContainerCards">
+					<div class="dcard">
+						<div class="dthumbnail">
+							<div class="dimageCount">000</div>
+						</div>
+						<span class="dprojectName">Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet</span>
+						<span class="dprojectNumber">00.0000.000</span>
+						<p class="dprojectLocation">
+							<span class="dprojectCity">Somerville</span>
+							<span class="dprojectCountry">United Arab Emirates ljlafjl</span>
+						</p>
+					</div>
+					<div class="dcard">
+						<div class="dthumbnail"><div class="dimageCount">000</div></div>
+						<span class="dprojectName">Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet</span>
+						<span class="dprojectNumber">00.0000.000</span>
+						<p class="dprojectLocation">
+							<span class="dprojectCity">Somerville</span>
+							<span class="dprojectCountry">United Arab Emirates ljlafjl</span>
+						</p>
+					</div>
+					<div class="dcard">
+						<div class="dthumbnail"><div class="dimageCount">000</div></div>
+						<span class="dprojectName">Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet</span>
+						<span class="dprojectNumber">00.0000.000</span>
+						<p class="dprojectLocation">
+							<span class="dprojectCity">Somerville</span>
+							<span class="dprojectCountry">United Arab Emirates ljlafjl</span>
+						</p>
+					</div>
+					<div class="dcard">
+						<div class="dthumbnail"><div class="dimageCount">000</div></div>
+						<span class="dprojectName">Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet</span>
+						<span class="dprojectNumber">00.0000.000</span>
+						<p class="dprojectLocation">
+							<span class="dprojectCity">Somerville</span>
+							<span class="dprojectCountry">United Arab Emirates ljlafjl</span>
+						</p>
+					</div>
+					<div class="dcard">
+						<div class="dthumbnail"><div class="dimageCount">000</div></div>
+						<span class="dprojectName">Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet</span>
+						<span class="dprojectNumber">00.0000.000</span>
+						<p class="dprojectLocation">
+							<span class="dprojectCity">Somerville</span>
+							<span class="dprojectCountry">United Arab Emirates ljlafjl</span>
+						</p>
+					</div>
+					<div class="dcard">
+						<div class="dthumbnail"><div class="dimageCount">000</div></div>
+						<span class="dprojectName">Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet</span>
+						<span class="dprojectNumber">00.0000.000</span>
+						<p class="dprojectLocation">
+							<span class="dprojectCity">Somerville</span>
+							<span class="dprojectCountry">United Arab Emirates ljlafjl</span>
+						</p>
+					</div>
+					<div class="dcard">
+						<div class="dthumbnail"><div class="dimageCount">000</div></div>
+						<span class="dprojectName">Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet</span>
+						<span class="dprojectNumber">00.0000.000</span>
+						<p class="dprojectLocation">
+							<span class="dprojectCity">Somerville</span>
+							<span class="dprojectCountry">United Arab Emirates ljlafjl</span>
+						</p>
+					</div>
+					<div class="dcard">
+						<div class="dthumbnail"><div class="dimageCount">000</div></div>
+						<span class="dprojectName">Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet</span>
+						<span class="dprojectNumber">00.0000.000</span>
+						<p class="dprojectLocation">
+							<span class="dprojectCity">Somerville</span>
+							<span class="dprojectCountry">United Arab Emirates ljlafjl</span>
+						</p>
+					</div>
+				</div><!-- end of dresultsContainerCards -->
+				<div class="dresultsContainerList">
+					<!-- list view -->
+					<div class="dlist">
+						<div class="dleft">
+							<div class="dthumbnail"></div>
+							<div class="dimageCount">000</div>
+						</div>
+						<div class="dright">
+							<span class="dprojectName"><a href="">Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet</a></span>
+							<p class="dsub">
+								<span class="dprojectNumber">00.0000.000</span>
+								<span class="dprojectCity">Somerville</span>
+								<span class="dprojectState">Massachusetts</span>
+								<span class="dprojectCountry">United States</span>
+								<span class="dstartDate">00 May 0000</span>
+								<span class="dendDate">00 Dec 0000</span>
+							</p>
+							<p class="dclient">
+								<span class="dlabel">Client: </span>
+								<span class="dservicesList">Lorem ipsum dolor sit amet</span>
+							</p>
+							<p class="dservices">
+								<span class="dlabel">Service Type: </span>
+								<span class="dservicesList">Lorem ipsum dolor, sit amet, consectetur adipiscing elit, Vivamus sagittis, lacus vel augue laoreet, rutrum faucibus dolor auctor</span>
+							</p>
+							<p class="dpracticeArea">
+								<span class="dlabel">Practice Area: </span>
+								<span class="dpaList">Lorem ipsum dolor, sit amet, consectetur adipiscing elit, Vivamus sagittis, lacus vel augue laoreet, rutrum faucibus dolor auctor</span>
+							</p>
+						</div>
+					</div>
+					<div class="dlist">
+						<div class="dleft">
+							<div class="dthumbnail"></div>
+							<div class="dimageCount">000</div>
+						</div>
+						<div class="dright">
+							<span class="dprojectName"><a href="">Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet</a></span>
+							<p class="dsub">
+								<span class="dprojectNumber">00.0000.000</span>
+								<span class="dprojectCity">Somerville</span>
+								<span class="dprojectState">Massachusetts</span>
+								<span class="dprojectCountry">United States</span>
+								<span class="dstartDate">00 May 0000</span>
+								<span class="dendDate">00 Dec 0000</span>
+							</p>
+							<p class="dclient">
+								<span class="dlabel">Client: </span>
+								<span class="dservicesList">Lorem ipsum dolor sit amet</span>
+							</p>
+							<p class="dservices">
+								<span class="dlabel">Service Type: </span>
+								<span class="dservicesList">Lorem ipsum dolor, sit amet, consectetur adipiscing elit, Vivamus sagittis, lacus vel augue laoreet, rutrum faucibus dolor auctor</span>
+							</p>
+							<p class="dpracticeArea">
+								<span class="dlabel">Practice Area: </span>
+								<span class="dpaList">Lorem ipsum dolor, sit amet, consectetur adipiscing elit, Vivamus sagittis, lacus vel augue laoreet, rutrum faucibus dolor auctor</span>
+							</p>
+						</div>
+					</div>
+					<div class="dlist">
+						<div class="dleft">
+							<div class="dthumbnail"></div>
+							<div class="dimageCount">000</div>
+						</div>
+						<div class="dright">
+							<span class="dprojectName"><a href="">Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet</a></span>
+							<p class="dsub">
+								<span class="dprojectNumber">00.0000.000</span>
+								<span class="dprojectCity">Somerville</span>
+								<span class="dprojectState">Massachusetts</span>
+								<span class="dprojectCountry">United States</span>
+								<span class="dstartDate">00 May 0000</span>
+								<span class="dendDate">00 Dec 0000</span>
+							</p>
+							<p class="dclient">
+								<span class="dlabel">Client: </span>
+								<span class="dservicesList">Lorem ipsum dolor sit amet</span>
+							</p>
+							<p class="dservices">
+								<span class="dlabel">Service Type: </span>
+								<span class="dservicesList">Lorem ipsum dolor, sit amet, consectetur adipiscing elit, Vivamus sagittis, lacus vel augue laoreet, rutrum faucibus dolor auctor</span>
+							</p>
+							<p class="dpracticeArea">
+								<span class="dlabel">Practice Area: </span>
+								<span class="dpaList">Lorem ipsum dolor, sit amet, consectetur adipiscing elit, Vivamus sagittis, lacus vel augue laoreet, rutrum faucibus dolor auctor</span>
+							</p>
+						</div>
+					</div>
+					<div class="dlist">
+						<div class="dleft">
+							<div class="dthumbnail"></div>
+							<div class="dimageCount">000</div>
+						</div>
+						<div class="dright">
+							<span class="dprojectName"><a href="">Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet</a></span>
+							<p class="dsub">
+								<span class="dprojectNumber">00.0000.000</span>
+								<span class="dprojectCity">Somerville</span>
+								<span class="dprojectState">Massachusetts</span>
+								<span class="dprojectCountry">United States</span>
+								<span class="dstartDate">00 May 0000</span>
+								<span class="dendDate">00 Dec 0000</span>
+							</p>
+							<p class="dclient">
+								<span class="dlabel">Client: </span>
+								<span class="dservicesList">Lorem ipsum dolor sit amet</span>
+							</p>
+							<p class="dservices">
+								<span class="dlabel">Service Type: </span>
+								<span class="dservicesList">Lorem ipsum dolor, sit amet, consectetur adipiscing elit, Vivamus sagittis, lacus vel augue laoreet, rutrum faucibus dolor auctor</span>
+							</p>
+							<p class="dpracticeArea">
+								<span class="dlabel">Practice Area: </span>
+								<span class="dpaList">Lorem ipsum dolor, sit amet, consectetur adipiscing elit, Vivamus sagittis, lacus vel augue laoreet, rutrum faucibus dolor auctor</span>
+							</p>
+						</div>
+					</div>
+					<div class="dlist">
+						<div class="dleft">
+							<div class="dthumbnail"></div>
+							<div class="dimageCount">000</div>
+						</div>
+						<div class="dright">
+							<span class="dprojectName"><a href="">Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet</a></span>
+							<p class="dsub">
+								<span class="dprojectNumber">00.0000.000</span>
+								<span class="dprojectCity">Somerville</span>
+								<span class="dprojectState">Massachusetts</span>
+								<span class="dprojectCountry">United States</span>
+								<span class="dstartDate">00 May 0000</span>
+								<span class="dendDate">00 Dec 0000</span>
+							</p>
+							<p class="dclient">
+								<span class="dlabel">Client: </span>
+								<span class="dservicesList">Lorem ipsum dolor sit amet</span>
+							</p>
+							<p class="dservices">
+								<span class="dlabel">Service Type: </span>
+								<span class="dservicesList">Lorem ipsum dolor, sit amet, consectetur adipiscing elit, Vivamus sagittis, lacus vel augue laoreet, rutrum faucibus dolor auctor</span>
+							</p>
+							<p class="dpracticeArea">
+								<span class="dlabel">Practice Area: </span>
+								<span class="dpaList">Lorem ipsum dolor, sit amet, consectetur adipiscing elit, Vivamus sagittis, lacus vel augue laoreet, rutrum faucibus dolor auctor</span>
+							</p>
+						</div>
+					</div>
+					<div class="dlist">
+						<div class="dleft">
+							<div class="dthumbnail"></div>
+							<div class="dimageCount">000</div>
+						</div>
+						<div class="dright">
+							<span class="dprojectName"><a href="">Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet</a></span>
+							<p class="dsub">
+								<span class="dprojectNumber">00.0000.000</span>
+								<span class="dprojectCity">Somerville</span>
+								<span class="dprojectState">Massachusetts</span>
+								<span class="dprojectCountry">United States</span>
+								<span class="dstartDate">00 May 0000</span>
+								<span class="dendDate">00 Dec 0000</span>
+							</p>
+							<p class="dclient">
+								<span class="dlabel">Client: </span>
+								<span class="dservicesList">Lorem ipsum dolor sit amet</span>
+							</p>
+							<p class="dservices">
+								<span class="dlabel">Service Type: </span>
+								<span class="dservicesList">Lorem ipsum dolor, sit amet, consectetur adipiscing elit, Vivamus sagittis, lacus vel augue laoreet, rutrum faucibus dolor auctor</span>
+							</p>
+							<p class="dpracticeArea">
+								<span class="dlabel">Practice Area: </span>
+								<span class="dpaList">Lorem ipsum dolor, sit amet, consectetur adipiscing elit, Vivamus sagittis, lacus vel augue laoreet, rutrum faucibus dolor auctor</span>
+							</p>
+						</div>
+					</div>
+					<div class="dlist">
+						<div class="dleft">
+							<div class="dthumbnail"></div>
+							<div class="dimageCount">000</div>
+						</div>
+						<div class="dright">
+							<span class="dprojectName"><a href="">Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet</a></span>
+							<p class="dsub">
+								<span class="dprojectNumber">00.0000.000</span>
+								<span class="dprojectCity">Somerville</span>
+								<span class="dprojectState">Massachusetts</span>
+								<span class="dprojectCountry">United States</span>
+								<span class="dstartDate">00 May 0000</span>
+								<span class="dendDate">00 Dec 0000</span>
+							</p>
+							<p class="dclient">
+								<span class="dlabel">Client: </span>
+								<span class="dservicesList">Lorem ipsum dolor sit amet</span>
+							</p>
+							<p class="dservices">
+								<span class="dlabel">Service Type: </span>
+								<span class="dservicesList">Lorem ipsum dolor, sit amet, consectetur adipiscing elit, Vivamus sagittis, lacus vel augue laoreet, rutrum faucibus dolor auctor</span>
+							</p>
+							<p class="dpracticeArea">
+								<span class="dlabel">Practice Area: </span>
+								<span class="dpaList">Lorem ipsum dolor, sit amet, consectetur adipiscing elit, Vivamus sagittis, lacus vel augue laoreet, rutrum faucibus dolor auctor</span>
+							</p>
+						</div>
+					</div>
+					<div class="dlist">
+						<div class="dleft">
+							<div class="dthumbnail"></div>
+							<div class="dimageCount">000</div>
+						</div>
+						<div class="dright">
+							<span class="dprojectName"><a href="">Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet</a></span>
+							<p class="dsub">
+								<span class="dprojectNumber">00.0000.000</span>
+								<span class="dprojectCity">Somerville</span>
+								<span class="dprojectState">Massachusetts</span>
+								<span class="dprojectCountry">United States</span>
+								<span class="dstartDate">00 May 0000</span>
+								<span class="dendDate">00 Dec 0000</span>
+							</p>
+							<p class="dclient">
+								<span class="dlabel">Client: </span>
+								<span class="dservicesList">Lorem ipsum dolor sit amet</span>
+							</p>
+							<p class="dservices">
+								<span class="dlabel">Service Type: </span>
+								<span class="dservicesList">Lorem ipsum dolor, sit amet, consectetur adipiscing elit, Vivamus sagittis, lacus vel augue laoreet, rutrum faucibus dolor auctor</span>
+							</p>
+							<p class="dpracticeArea">
+								<span class="dlabel">Practice Area: </span>
+								<span class="dpaList">Lorem ipsum dolor, sit amet, consectetur adipiscing elit, Vivamus sagittis, lacus vel augue laoreet, rutrum faucibus dolor auctor</span>
+							</p>
+						</div>
+					</div>
+					<div class="dlist">
+						<div class="dleft">
+							<div class="dthumbnail"></div>
+							<div class="dimageCount">000</div>
+						</div>
+						<div class="dright">
+							<span class="dprojectName"><a href="">Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet</a></span>
+							<p class="dsub">
+								<span class="dprojectNumber">00.0000.000</span>
+								<span class="dprojectCity">Somerville</span>
+								<span class="dprojectState">Massachusetts</span>
+								<span class="dprojectCountry">United States</span>
+								<span class="dstartDate">00 May 0000</span>
+								<span class="dendDate">00 Dec 0000</span>
+							</p>
+							<p class="dclient">
+								<span class="dlabel">Client: </span>
+								<span class="dservicesList">Lorem ipsum dolor sit amet</span>
+							</p>
+							<p class="dservices">
+								<span class="dlabel">Service Type: </span>
+								<span class="dservicesList">Lorem ipsum dolor, sit amet, consectetur adipiscing elit, Vivamus sagittis, lacus vel augue laoreet, rutrum faucibus dolor auctor</span>
+							</p>
+							<p class="dpracticeArea">
+								<span class="dlabel">Practice Area: </span>
+								<span class="dpaList">Lorem ipsum dolor, sit amet, consectetur adipiscing elit, Vivamus sagittis, lacus vel augue laoreet, rutrum faucibus dolor auctor</span>
+							</p>
+						</div>
+					</div>
+					<div class="dlist">
+						<div class="dleft">
+							<div class="dthumbnail"></div>
+							<div class="dimageCount">000</div>
+						</div>
+						<div class="dright">
+							<span class="dprojectName"><a href="">Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet</a></span>
+							<p class="dsub">
+								<span class="dprojectNumber">00.0000.000</span>
+								<span class="dprojectCity">Somerville</span>
+								<span class="dprojectState">Massachusetts</span>
+								<span class="dprojectCountry">United States</span>
+								<span class="dstartDate">00 May 0000</span>
+								<span class="dendDate">00 Dec 0000</span>
+							</p>
+							<p class="dclient">
+								<span class="dlabel">Client: </span>
+								<span class="dservicesList">Lorem ipsum dolor sit amet</span>
+							</p>
+							<p class="dservices">
+								<span class="dlabel">Service Type: </span>
+								<span class="dservicesList">Lorem ipsum dolor, sit amet, consectetur adipiscing elit, Vivamus sagittis, lacus vel augue laoreet, rutrum faucibus dolor auctor</span>
+							</p>
+							<p class="dpracticeArea">
+								<span class="dlabel">Practice Area: </span>
+								<span class="dpaList">Lorem ipsum dolor, sit amet, consectetur adipiscing elit, Vivamus sagittis, lacus vel augue laoreet, rutrum faucibus dolor auctor</span>
+							</p>
+						</div>
+					</div>
+				</div><!-- dresultsContainerList -->
+				<div class="dquickViewContainer">
+					<div class="dcloseIcon"></div>
+					<div class="dquickView">
+						<div class="dleft">
+							<div class="dlargeThumbnail"></div>
+							<div class="dlargeThumbnail"></div>
+							<div class="dlargeThumbnail"></div>
+							<div class="dlargeThumbnail"></div>
+						</div>
+						<div class="dright">
+							<div class="dheader">Lorem ipsum dolor sit amet onsectetur adipiscing elit</div>
+							<div class="dsub1">
+								<div class="dtopProject"></div>
+								<div class="dprojectNumber">00.0000.000</div>
+							</div>
+							<div class="dsub2">
+								<span class="dprojectCity">Somerville</span>
+								<span class="dprojectState">Massachusetts</span>
+								<span class="dprojectCountry">United States</span>
+							</div>
+							<div class="dprofileButton">View Profile</div>
+							<div class="dsub3">
+								Client: <span class="dclient">Lorem Ipsum</span><br/>
+								Project Dates: <span class="dstartDate">00 Aug 2020</span> &mdash; <span class="dendDate">00 May 2025</span><br/>
+								Gross Area: <span class="dgsf">000,000</span> (<span class="dgsm">00,000</span>)<br/>
+								Construction Cost: <span class="dconstructionCost">000,000,000 USD</span><br/>
+								Office: <span class="doffice">Washington, DC</span><br/>
+								Primary Gensler Contact: <span class="dprimaryContact">Anastasia Marchenko</span>
+							</div>
+							<div class="dsub4">
+								<span class="dtitle">Practice Area</span><br/>
+								<span class="dlist">Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Nullam id dolor id nibh ultricies vehicula ut id elit. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Cras mattis consectetur purus sit amet fermentum. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
+							</div>
+							<div class="dsub5">
+								<span class="dtitle">Services</span><br/>
+								<span class="dlist">Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Nullam id dolor id nibh ultricies vehicula ut id elit. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Cras mattis consectetur purus sit amet fermentum. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
+							</div>
+							<div class="dsub6">
+								<span class="dtitle">Project Type</span><br/>
+								<span class="dlist">Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Nullam id dolor id nibh ultricies vehicula ut id elit. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Cras mattis consectetur purus sit amet fermentum. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
+							</div>
+						</div>
+					</div>
+				</div><!-- end of dquickviewContainer -->
+				<div class="dfeedback">
+					<a href="#"><img src="icons/feedback-right.svg"/></a>
+				</div><!-- end of dfeedback -->
+				<div class="dnoData">
+					<span class="dmessage">No results found for <i>‘keyword’</i></span>
+				</div><!-- end of dnoData -->
+			</div><!-- end of dresultsMain -->
+		</div><!-- end of dscopeProjects -->
+
+		<div class="dscopeClients">
+			<div class="dsidebar"></div>
+			<div class="dresultsMain"></div>
+		</div><!-- end of dscopeClients -->
+
+		<div class="dscopePartners">
+			<div class="dsidebar"></div>
+			<div class="dresultsMain"></div>
+		</div><!-- end of dscopePartners -->
+
+		<div class="dscopeCountries">
+			<div class="dsidebar"></div>
+			<div class="dresultsMain"></div>
+		</div><!-- end of dscopeCountries -->
+
+		<div class="dscopeImages">
+			<div class="dsidebar"></div>
+			<div class="dresultsMain"></div>
+		</div><!-- end of dscopeImages -->
+
+		<div class="dscopeDocuments">
+			<div class="dsidebar"></div>
+			<div class="dresultsMain"></div>
+		</div><!-- end of dscopeDocuments -->
+
+		<div class="dscopePages">
+			<div class="dsidebar"></div>
+			<div class="dresultsMain"></div>
+		</div><!-- end of dscopePages -->
+
+		<div class="dscopeReports">
+			<div class="dsidebar"></div>
+			<div class="dresultsMain"></div>
+		</div><!-- end of dscopeReports -->
+	</div>
+</body>
+<script>
+	window.onload = function() {
+		var vcard = document.querySelector('.dscopeProjects .dresultsContainerCards');
+		var vlist = document.querySelector('.dscopeProjects .dresultsContainerList');
+		var vc_icon = document.querySelector('.dscopeProjects button.dcardView');
+		var vl_icon = document.querySelector('.dscopeProjects button.dlistView');
+		var msideButton = document.querySelector('.dsidebar button');
+		var msideButton_arrow = document.querySelector('.dsidebar button .darrowDown');
+		var vqview = document.querySelector('.dscopeProjects .dquickViewContainer');
+		console.log('reading script file');
+		vcard.style.display = 'flex';
+		vc_icon.style.opacity = '1';
+		document.querySelector('button.dcardView').onclick = function() {
+			// dcardView onclick
+			vlist.style.display = 'none';
+			vcard.style.display = 'flex';
+			vl_icon.style.opacity = '0.4';
+			vc_icon.style.opacity = '1';
+		}
+		document.querySelector('button.dlistView').onclick = function() {
+			// dlistView onclick
+			vcard.style.display = 'none';
+			vlist.style.display = 'flex';
+			vc_icon.style.opacity = '0.4';
+			vl_icon.style.opacity = '1';
+		}
+		msideButton.onmouseover = function() {
+			msideButton_arrow.style.opacity = '1'; //works only for the first element - check
+		}
+		msideButton.onmouseout = function() {
+			msideButton_arrow.style.opacity = '0.4'; //works only for the first element - check
+		}
+		document.querySelector('.dscopeProjects .dthumbnail').onclick = function() {
+			vqview.style.display = 'block';
+		} //works only for the first element - check
+		document.querySelector('.dquickViewContainer .dcloseIcon').onclick = function() {
+			vqview.style.display = 'none';
+		}
+	}
+</script>
+</html>

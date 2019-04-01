@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="20px" viewBox="0 0 16 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Primary" transform="translate(-252.000000, -12.000000)" fill-rule="nonzero">
+            <g id="badge-top" transform="translate(252.000000, 12.000000)">
+                <polygon id="Shape" fill="#056CB6" points="15.8666667 20 7.9322 15 0 20 0 0 15.8666667 0"></polygon>
+                <polygon id="Shape" fill="#FFFFFF" points="8 2 9.18 5.83985201 13 5.83985201 9.91 8.17732558 11.09 12 8 9.61760042 4.91 11.9841438 6.09 8.17996829 3 5.83985201 6.82 5.83985201"></polygon>
+            </g>
+        </g>
+    </g>
+</svg>
