@@ -7,6 +7,7 @@
     .dcontent-block .dtitle {display:block; font:700 20px/30px 'Open Sans',sans-serif; margin-bottom:8px; text-align:center;}
     .dcontent-block .darticle-image {width:100%; height:300px; background-color:rgba(0,0,0,0.2); margin-bottom:32px;}
     .dcontent-block .dtext-block {font:300 16px/28px 'Open Sans',sans-serif; text-align:center; display:block;}
+    .dvisible {opacity:1;}
     /* danimate */
     .dcontent-block.danimate {-webkit-animation:dslide 1s ease-in-out; animation:dslide 1s ease-in-out; opacity:1; transition:opacity 1s ease-in-out;}
     @-webkit-keyframes dslide {
@@ -43,8 +44,8 @@
 -->
 </head>
 <body>
-  <div class="dapp-wrapper" onscroll="fanimate()">
-    <div class="dcontent-block">
+  <div class="dapp-wrapper">
+    <div class="dcontent-block dvisible">
       <div class="darticle-image"></div>
       <span class="dtitle">Integer posuere erat a ante venenatis</span>
       <span class="dtext-block">Nulla vitae elit libero, a pharetra augue. Nullam id dolor id nibh ultricies vehicula ut id elit. Sed posuere consectetur est at lobortis. Cras mattis consectetur purus sit amet fermentum. Maecenas sed diam eget risus varius blandit sit amet non magna. Cras mattis consectetur purus sit amet fermentum. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</span>
