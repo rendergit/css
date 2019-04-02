@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="25px" height="28px" viewBox="0 0 25 28" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 51.3 (57544) - http://www.bohemiancoding.com/sketch -->
+    <title>people</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="003" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="302" transform="translate(-505.000000, -1244.000000)" fill="#FFFFFF" fill-rule="nonzero">
+            <g id="Group-16">
+                <g id="employee-resources" transform="translate(0.000000, 1123.000000)">
+                    <g id="Group-6" transform="translate(425.000000, 100.000000)">
+                        <g id="Group-4" transform="translate(57.000000, 0.000000)">
+                            <path d="M41.6680046,27.2228911 C41.6680046,30.6601322 38.8783405,33.4444444 35.4451135,33.4444444 C32.0065346,33.4444444 29.2222222,30.6601322 29.2222222,27.2228911 C29.2222222,23.7843122 32.0065346,21 35.4451135,21 C38.8770024,21 41.6680046,23.7843122 41.6680046,27.2228911 Z M47.8888889,41.3514764 L47.8764141,49 L23,48.9819649 L23,41.3514764 C23,38.7032738 25.2283204,36.5555556 27.9743472,36.5555556 L42.9098636,36.5555556 C45.6574497,36.5555556 47.8888889,38.7032738 47.8888889,41.3514764 Z" id="people"></path>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

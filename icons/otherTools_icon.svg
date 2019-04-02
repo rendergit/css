@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="30px" height="30px" viewBox="0 0 30 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 51.3 (57544) - http://www.bohemiancoding.com/sketch -->
+    <title>view-grid</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="003" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="302" transform="translate(-549.000000, -2572.000000)" fill="#FFFFFF" fill-rule="nonzero">
+            <g id="Group-16" transform="translate(-947.000000, -1.000000)">
+                <g id="other-tools" transform="translate(947.000000, 2453.000000)">
+                    <g id="Group-6" transform="translate(425.000000, 100.000000)">
+                        <g id="Group-4" transform="translate(104.000000, 0.000000)">
+                            <path d="M27.8947368,38.9473684 L35.7894737,38.9473684 L35.7894737,46.8421053 L27.8947368,46.8421053 L27.8947368,38.9473684 Z M20,20 L35.7894737,20 L35.7894737,35.7894737 L20,35.7894737 L20,20 Z M38.9473684,38.9473684 L50,38.9473684 L50,50 L38.9473684,50 L38.9473684,38.9473684 Z M38.9473684,24.7368421 L50,24.7368421 L50,35.7894737 L38.9473684,35.7894737 L38.9473684,24.7368421 Z" id="view-grid"></path>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
