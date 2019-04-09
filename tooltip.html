@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {font-family:'open sans',lato,verdana,ptsans,sans-serif; padding:8vh 8vw;}
+    .dbutton-container {display:flex; flex-direction:row;}
+    .dbutton-container>* {width:56px; height:56px; background:transparent url(icons/view-grid.svg) center no-repeat; display:inline-block; border-radius:28px; position:relative; margin:40px 40px 40px 0px; display: flex; justify-content: center; border:1px solid #000}
+    .dtooltip {font-size:13px; line-height:18px; position:absolute; top:-60px; white-space:nowrap; background-color:#000; color:#fff; padding:16px; border-radius:3px; display:none;}
+  </style>
+</head>
+<body>
+  <h3>Share icons</h3>
+  <p>Using <strong>display:flex</strong> to center the tooltip on hover.<br>Using <strong>onmouseover</strong> directly to utilise a common function.</p>
+  <div class="dbutton-container">
+    <a href="" class="dbtn1" onmouseover="ftooltip(this)"><span class="dtooltip">Tooltip message</span></a>
+    <a href="" class="dbtn2" onmouseover="ftooltip(this)"><span class="dtooltip">Tooltip message</span></a>
+  </div>
+</body>
+<script type="text/javascript">
+  function ftooltip(x) {
+    var vtooltipElement = x.querySelector('.dtooltip');
+    vtooltipElement.style.display = 'block';
+    x.addEventListener('mouseout',function() {
+      vtooltipElement.style.display = 'none';
+    });
+  }
+</script>
+</html>
