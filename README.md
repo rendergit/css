@@ -2,7 +2,7 @@
 
 **View rendered files with the links below**
 
-- [x] [Tooltip] (https://rendergit.github.io/css/tooltip.html)
+- [x] [Tooltip](https://rendergit.github.io/css/tooltip.html)
 - [x] [Scroll animation](https://rendergit.github.io/css/animate_on_scroll.html)
 - [x] [iLite test](https://rendergit.github.io/css/iLite_test.html)
 - [ ] [Onboarding pop-up layout test](https://rendergit.github.io/css/onboarding_popup_layout_test.html)
