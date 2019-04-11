@@ -80,9 +80,10 @@
   <script>
       vElement = document.querySelectorAll('.dcontent-block');
       vIndex = 0;
+      vIndexMax = vElement.length - 1;
       window.addEventListener('scroll', fanimate);
       function fanimate() {
-            if(vIndex > 5) {
+            if(vIndex > vIndexMax) {
               vIndex = 0;
             }
             var hWindow = window.innerHeight;
