@@ -4,6 +4,7 @@
 
 - [x] [Scroll animation](https://rendergit.github.io/css/animate_on_scroll.html)
 - [x] [Search web application test prototype](https://rendergit.github.io/css/search_app_test.html)
+- [x] [Basic carousel](https://rendergit.github.io/css/carousel.html)
 - [x] [Tags - visual design test](https://rendergit.github.io/css/tags_visual_alternatives.html)
 - [x] [Tooltip](https://rendergit.github.io/css/tooltip.html)
 - [x] [iLite test](https://rendergit.github.io/css/iLite_test.html)
