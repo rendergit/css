@@ -1,0 +1,72 @@
+<! DOCTYPE html>
+<head>
+  <title>Basic Carousel</title>
+  <style>
+    * {font-family:open-sans,'open sans',verdana,pt-sans,'pt sans','proxima-nova',helvetica,'san francisco',roboto,sans-serif; box-sizing:border-box; outline:none;}
+    .dcarousel-wrapper {height:480px; width:80%; min-width:280px; margin:8vh auto; position:relative;}
+    .dcarousel-wrapper .dbtn-container {position:absolute; top:calc(50% - 30px); width:100%; padding:0px 4%; z-index:9999;}
+    .dcarousel-wrapper .dbtn-container button {width:56px; height:56px; border-radius:50%; border-color:#fff;}
+    .dcarousel-wrapper .dbtn-container button:hover {border-color:transparent; background-color:#ffbc0a; cursor:pointer;}
+    .dcarousel-wrapper .dbtn-container button:disabled {opacity:0.5; background-color:transparent; border-color:#fff; cursor:default;}
+    .dcarousel-wrapper .dbtn-previous {float:left; background:transparent url(/icons/arrow-previous-white.svg) no-repeat center;}
+    .dcarousel-wrapper .dbtn-next {float:right; background:transparent url(/icons/arrow-next-white.svg) no-repeat center;}
+    .dcarousel-wrapper .dcarousel {width:100%; height:100%;}
+    .dcarousel-wrapper .dimage-block {width:100%; height:100%; position:relative; background:#888; display:none; opacity:0;}
+    .dcarousel-wrapper .dtext-block {position:absolute; bottom:0; padding:0 4% 8%; color:#f8f4f0;}
+    .dcarousel-wrapper .dimage-block .dcat {font-size:12px; line-height:1em; text-transform:uppercase; display:block; margin-bottom:16px;}
+    .dcarousel-wrapper .dimage-block .dcaption {font-size:18px; line-height:1em; font-weight:700; display:block;}
+    .dshow {display:inline-block !important; opacity:1 !important; transition:opacity 4s ease-in;}
+    .dcarousel-wrapper .dbubble-container {position:absolute; width:100%; bottom:16px; display:flex; flex-direction:row; align-items:center; justify-content:center;}
+    .dcarousel-wrapper .dbubble {border:none; height:8px; width:8px; border-radius:4px; margin-right:16px; background-color:rgba(248,244,240,0.5);}
+  </style>
+</head>
+<body>
+  <div class="dcarousel-wrapper">
+    <div class="dbtn-container">
+      <button type="button" class="dbtn-previous" onclick="fprevious()"></button>
+      <button type="button" class="dbtn-next" onclick="fnext()"></button>
+    </div><!-- end of button container -->
+    <div class="dcarousel">
+      <div class="dimage-block dshow"><div class="dtext-block"><span class="dcat">Subheader 1</span><span class="dcaption">Box 1</span></div></div>
+      <div class="dimage-block"><div class="dtext-block"><span class="dcat">Subheader 2</span><span class="dcaption">Box 2</span></div></div>
+      <div class="dimage-block"><div class="dtext-block"><span class="dcat">Subheader 3</span><span class="dcaption">Box 3</span></div></div>
+    </div><!-- end of dcarousel -->
+    <div class="dbubble-container"></div>
+  </div><!-- end of dcarousel wrapper -->
+  <script>
+    var velement = document.querySelectorAll('.dcarousel-wrapper .dcarousel .dimage-block');
+    var velementIndexMax = velement.length - 1;
+    var vbubbleCon = document.querySelector('.dcarousel-wrapper .dbubble-container');
+    var vbubble = document.querySelectorAll('.dcarousel-wrapper .dbubble-container .dbubble');
+    //onclick previous button
+    function fprevious() {
+      for(i = 0; i < velement.length; i++) {
+        if (i != 0) {
+          if(velement[i].classList.contains('dshow')) {
+            velement[i].classList.remove('dshow');
+            velement[i - 1].classList.add('dshow');
+            break;
+          }
+        }
+      }
+    }
+    //onclick next button
+    function fnext() {
+      for(i = 0; i < velement.length; i++) {
+        if(i != velementIndexMax) {
+          if(velement[i].classList.contains('dshow')) {
+            velement[i].classList.remove('dshow');
+            velement[i + 1].classList.add('dshow');
+            break;
+          }
+        }
+      }
+    }
+    // creating pagination bubbles
+    var vinnerString = '<div class="dbubble"></div>';
+    for(i = 0; i < velement.length; i++){
+      vbubbleCon.insertAdjacentHTML('afterbegin', vinnerString);
+    }
+  </script>
+</body>
+</html>
