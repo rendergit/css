@@ -1,6 +1,7 @@
 # css
 
-**View rendered files with the links below**
+**Links to rendered files**
+Separate files have been merged for easier sharing.
 
 - [x] [Scroll animation](https://rendergit.github.io/css/animate_on_scroll.html)
 - [x] [Search web application test prototype](https://rendergit.github.io/css/search_app_test.html)
